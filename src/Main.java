@@ -1,15 +1,110 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.*;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Scanner scanner = new Scanner(System.in);
+        List<Combate> historialCombates = new ArrayList<>();
+        Jugador jugador1, jugador2;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        while (true) {
+            System.out.println("\n--- MENÚ PRINCIPAL ---");
+            System.out.println("1. Iniciar una partida");
+            System.out.println("2. Ver tablas de lucha");
+            System.out.println("3. Salir");
+            System.out.print("Elige una opción: ");
+            int opcion = pedirOpcionMenu(scanner);
+
+            if (opcion == 1) {
+                System.out.print("Introduce el nombre del jugador 1: ");
+                String nombre1 = scanner.nextLine();
+                jugador1 = new Jugador(nombre1);
+
+                System.out.print("Introduce el nombre del jugador 2: ");
+                String nombre2 = scanner.nextLine();
+                jugador2 = new Jugador(nombre2);
+
+                boolean repetir = true;
+                while (repetir) {
+                    System.out.println("Personajes disponibles: ");
+                    System.out.println("1. Kratos");
+                    System.out.println("2. OmniMan");
+                    System.out.println("3. SubZero");
+
+                    int opcion1 = pedirOpcionPersonaje(scanner, nombre1);
+                    int opcion2 = pedirOpcionPersonaje(scanner, nombre2);
+
+                    jugador1.seleccionarPersonaje(crearPersonajePorOpcion(opcion1));
+                    jugador2.seleccionarPersonaje(crearPersonajePorOpcion(opcion2));
+
+                    JuegoLucha juego = new JuegoLucha(jugador1, jugador2, historialCombates);
+                    juego.iniciarPelea();
+
+                    System.out.print("¿Desean repetir la pelea? (s/n): ");
+                    String resp = scanner.next();
+                    scanner.nextLine();
+                    repetir = resp.equalsIgnoreCase("s");
+                }
+            } else if (opcion == 2) {
+                if (historialCombates.isEmpty()) {
+                    System.out.println("No hay peleas registradas.");
+                    continue;
+                }
+                System.out.print("Introduce el nombre del jugador para ver estadísticas: ");
+                String nombre = scanner.nextLine();
+                JuegoLucha.mostrarEstadisticas(historialCombates, nombre);
+                JuegoLucha.mostrarTabla(historialCombates);
+            } else if (opcion == 3) {
+                System.out.println("¡Hasta luego!");
+                break;
+            }
+        }
+    }
+
+    private static int pedirOpcionMenu(Scanner scanner) {
+        int opcion = -1;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                opcion = scanner.nextInt();
+                scanner.nextLine();
+                if (opcion >= 1 && opcion <= 3) {
+                    break;
+                } else {
+                    System.out.print("Opción inválida. Elige 1, 2 o 3: ");
+                }
+            } else {
+                System.out.print("Entrada no válida. Debes ingresar un número: ");
+                scanner.next();
+            }
+        }
+        return opcion;
+    }
+
+    private static int pedirOpcionPersonaje(Scanner scanner, String nombreJugador) {
+        int opcion;
+        while (true) {
+            System.out.print(nombreJugador + ", elige tu personaje (1-3): ");
+            if (scanner.hasNextInt()) {
+                opcion = scanner.nextInt();
+                scanner.nextLine();
+                if (opcion >= 1 && opcion <= 3) {
+                    break;
+                } else {
+                    System.out.println("Opción inválida. Elige un número entre 1 y 3.");
+                }
+            } else {
+                System.out.println("Entrada no válida. Debes ingresar un número.");
+                scanner.next();
+            }
+        }
+        return opcion;
+    }
+
+    private static Personaje crearPersonajePorOpcion(int opcion) {
+        switch (opcion) {
+            case 1: return new Kratos("Kratos");
+            case 2: return new OmniMan("OmniMan");
+            case 3: return new SubZero("SubZero");
+            default: throw new IllegalArgumentException("Opción de personaje inválida.");
         }
     }
 }
