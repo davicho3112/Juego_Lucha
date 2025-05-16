@@ -1,6 +1,6 @@
 package Sujeto;
 
-import Observadores.Personaje;
+import Observadores.PropiedadesPersonaje.Personaje;
 
 public interface Sujeto {
     void agregarPersonaje(Personaje o);

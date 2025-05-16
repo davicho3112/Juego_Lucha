@@ -1,4 +1,5 @@
-import Observadores.Personaje;
+import Observadores.PropiedadesPersonaje.Habilidades.Habilidad;
+import Observadores.PropiedadesPersonaje.Personaje;
 import Sujeto.Jugador;
 
 import java.util.*;
@@ -72,6 +73,35 @@ public class JuegoLucha {
         System.out.println("Turno de " + atacante.getNombre() +
                 ". Puntos de vida de " + defensor.getNombre() +
                 ": " + defensor.getPuntosDeVida());
+
+        //Muestra las habilidades del personaje que tiene como turno atacar
+        List<Habilidad> habilidades = atacante.getHabilidades();
+        System.out.println("\nHabilidades disponibles para el personaje: "+ atacante.getNombre());
+        for (int i = 0; i < habilidades.size(); i++) {
+            System.out.println((i + 1) + ". " + habilidades.get(i).getNombre());
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+        //Se le indica al jugador que elija una habilidad
+        do {
+            System.out.print("Elige una habilidad (1-" + habilidades.size() + "): ");
+            while (!scanner.hasNextInt()) {
+                System.out.print("Por favor, ingresa un número válido: ");
+                scanner.next();
+            }
+            opcion = scanner.nextInt();
+        } while (opcion < 1 || opcion > habilidades.size());
+
+        //Ejecuta la habilidad elegida
+        Habilidad habilidadElegida = habilidades.get(opcion - 1);
+
+        if (atacante == jugador1.getPersonaje()) {
+            jugador1.establecerHabilidadPersonaje(habilidadElegida);
+        } else {
+            jugador2.establecerHabilidadPersonaje(habilidadElegida);
+        }
+
         atacante.atacar(defensor);
 
         if (defensor == jugador1.getPersonaje()) {

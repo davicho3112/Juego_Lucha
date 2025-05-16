@@ -1,6 +1,6 @@
 import Observadores.Kratos;
 import Observadores.OmniMan;
-import Observadores.Personaje;
+import Observadores.PropiedadesPersonaje.Personaje;
 import Observadores.SubZero;
 import Sujeto.Jugador;
 
@@ -32,9 +32,9 @@ public class Main {
                 boolean repetir = true;
                 while (repetir) {
                     System.out.println("Personajes disponibles: ");
-                    System.out.println("1. Observadores.Kratos");
-                    System.out.println("2. Observadores.OmniMan");
-                    System.out.println("3. Observadores.SubZero");
+                    System.out.println("1. Kratos");
+                    System.out.println("2. OmniMan");
+                    System.out.println("3. SubZero");
 
                     int opcion1 = pedirOpcionPersonaje(scanner, nombre1);
                     int opcion2 = pedirOpcionPersonaje(scanner, nombre2);
@@ -111,9 +111,9 @@ public class Main {
     //Metodo para escoger correctamente el personaje
     private static Personaje crearPersonajePorOpcion(int opcion) {
         switch (opcion) {
-            case 1: return new Kratos("Observadores.Kratos");
-            case 2: return new OmniMan("Observadores.OmniMan");
-            case 3: return new SubZero("Observadores.SubZero");
+            case 1: return new Kratos("Kratos");
+            case 2: return new OmniMan("OmniMan");
+            case 3: return new SubZero("SubZero");
             default: throw new IllegalArgumentException("Opción de personaje inválida.");
         }
     }
