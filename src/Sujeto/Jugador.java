@@ -1,6 +1,7 @@
 package Sujeto;
 
-import Observadores.Personaje;
+import Observadores.PropiedadesPersonaje.Habilidades.Habilidad;
+import Observadores.PropiedadesPersonaje.Personaje;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class Jugador implements Sujeto,Cloneable {
     private String nombre;
     private Personaje personaje;
     private List<Personaje> estadoPersonaje = new ArrayList<>(); // Se agregan los observadores ( que serian los personajes )
+    private String habilidadPersonaje;
     private int puntaje = 0;
     private String estadoSalud;
 
@@ -50,6 +52,8 @@ public class Jugador implements Sujeto,Cloneable {
 
     }
 
+
+
     //Analiza como en el Main se esta llamando este metodo y se realizen correctamente los cambios de estado
 
     /**
@@ -75,6 +79,27 @@ public class Jugador implements Sujeto,Cloneable {
         notificarEstadoPersonaje();
 
     }
+
+    public void establecerHabilidadPersonaje(Habilidad habilidad){
+
+        this.habilidadPersonaje = habilidad.getNombre();
+        System.out.printf("Habilidad de %s: %s\n", personaje.getNombre(), habilidad);
+        notificarHabilidades();
+
+    }
+
+
+
+    /**
+     * Metodo que se encarga de notificar a los observadores( habilidades ) cuando son usados.
+     *
+     */
+    public void notificarHabilidades() {
+        for (Personaje p : estadoPersonaje) {
+            p.actualizarHabilidad(habilidadPersonaje);
+        }
+    }
+
 
     /**
      * Metodo se encarga de encontrar al personaje y actualizar su estado de salud.
