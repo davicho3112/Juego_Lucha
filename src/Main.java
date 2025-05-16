@@ -1,4 +1,3 @@
-
 import Observadores.Kratos;
 import Observadores.OmniMan;
 import Observadores.Personaje;
@@ -119,3 +118,4 @@ public class Main {
         }
     }
 }
+

@@ -40,4 +40,8 @@ public class Combate {
     public LocalDateTime getFecha() {
         return fecha;
     }
+
 }
+
+
+

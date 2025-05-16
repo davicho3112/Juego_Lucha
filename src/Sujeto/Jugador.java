@@ -88,3 +88,4 @@ public class Jugador implements Sujeto,Cloneable {
 
 
 }
+

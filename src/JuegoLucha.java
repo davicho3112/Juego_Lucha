@@ -1,4 +1,3 @@
-
 import Observadores.Personaje;
 import Sujeto.Jugador;
 
@@ -113,3 +112,4 @@ public class JuegoLucha {
     }
 
 }
+
