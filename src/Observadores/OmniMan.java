@@ -1,10 +1,12 @@
 package Observadores;
 
-import java.util.ArrayList;
+import Observadores.PropiedadesPersonaje.Personaje;
+import Observadores.PropiedadesPersonaje.Habilidades.*;
+
 import java.util.List;
 import java.util.Random;
 
-public class OmniMan implements Personaje {
+public class OmniMan   implements Personaje   {
     private String nombre;
     private int puntosDeVida;
     private String estadoPersonaje;
@@ -12,6 +14,8 @@ public class OmniMan implements Personaje {
     private final int MIN_DANO;
     private int victorias;
     private int derrotas;
+    private List<Habilidad> habilidades;
+
 
     public OmniMan(String nombre) {
 
@@ -22,6 +26,7 @@ public class OmniMan implements Personaje {
         MIN_DANO = 20;
         victorias = 0;
         derrotas = 0;
+        habilidades = List.of(new Golpes(), new RayosLazer());// Creamos una lista inmutible que contendra las habilidades. En ella no se puede añadir ni remover.
 
     }
 
@@ -35,6 +40,11 @@ public class OmniMan implements Personaje {
     @Override
     public void recibirDano(int dano) {
         puntosDeVida -= dano;
+    }
+
+    @Override
+    public List<Habilidad> getHabilidades() {
+        return habilidades;
     }
 
     @Override
@@ -78,10 +88,14 @@ public class OmniMan implements Personaje {
 
     }
 
-    /**
-     * Metodo para realizar la clonacion del objeto Kratos
-     * @return
-     */
+    public void actualizarHabilidad(String habilidad) {
+        System.out.println("OmniMan: " + habilidad);
+    }
+
+        /**
+         * Metodo para realizar la clonacion del objeto Kratos
+         * @return
+         */
     @Override
     public Personaje clone() {
         return new OmniMan(this.nombre);

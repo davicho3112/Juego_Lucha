@@ -1,6 +1,8 @@
 package Observadores;
 
-import java.util.ArrayList;
+import Observadores.PropiedadesPersonaje.Personaje;
+import Observadores.PropiedadesPersonaje.Habilidades.*;
+
 import java.util.List;
 import java.util.Random;
 
@@ -12,6 +14,7 @@ public class Kratos implements Personaje {
     private final int MIN_DANO;
     private int victorias ;
     private int derrotas ;
+    private List<Habilidad> habilidades;
 
     public Kratos(String nombre) {
         this.nombre = nombre;
@@ -21,11 +24,13 @@ public class Kratos implements Personaje {
         MIN_DANO = 15;
         victorias = 0;
         derrotas = 0;
+        habilidades = List.of(new Golpes(), new Espada());// Creamos una lista inmutible que contendra las habilidades. En ella no se puede añadir ni remover.
     }
 
     @Override
     public void atacar(Personaje oponente) {
         int dano = new Random().nextInt((MAX_DANO - MIN_DANO) + 1) + MIN_DANO;
+
         oponente.recibirDano(dano);
         System.out.println(nombre + " ataca con la espada a " + oponente.getNombre() + " causando " + dano + " puntos de daño.");
     }
@@ -33,6 +38,11 @@ public class Kratos implements Personaje {
     @Override
     public void recibirDano(int dano) {
         puntosDeVida -= dano;
+    }
+
+    @Override
+    public List<Habilidad> getHabilidades() {
+        return habilidades;
     }
 
     @Override
@@ -73,6 +83,10 @@ public class Kratos implements Personaje {
     public void actualizarEstado(String estadoSaludPersonaje){
         this.estadoPersonaje = estadoSaludPersonaje;
         System.out.println("Kratos: " + estadoPersonaje);
+    }
+
+    public void actualizarHabilidad(String habilidad){
+        System.out.println("Kratos: " + habilidad);
     }
 
     /**
